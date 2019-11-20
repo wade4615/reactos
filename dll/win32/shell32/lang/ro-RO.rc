@@ -771,6 +771,7 @@ BEGIN
     IDS_PASTE "&Lipește"
     IDS_EJECT "S&coate"
     IDS_DISCONNECT "Deconectea&ză"
+    IDS_OPENFILELOCATION "Open f&ile location"
 
     IDS_CREATEFOLDER_DENIED "Nu poate fi creat un dosar cu numele „%1”"
     IDS_CREATEFOLDER_CAPTION "Nu poate fi creat dosar"
@@ -874,6 +875,7 @@ BEGIN
     IDS_CANTEJECTMEDIA "Eșec la scoaterea mediului de stocare (Cod de eroare: %lu)."
     IDS_CANTSHOWPROPERTIES "Eșec la inspecția proprietăților (Cod de eroare: %lu)."
     IDS_CANTDISCONNECT "Eșec la deconectare (Cod de eroare: %lu)."
+    IDS_NONE "(None)"
 
     /* Friendly File Type Names */
     IDS_DIRECTORY "Dosar"
@@ -910,6 +912,7 @@ BEGIN
     IDS_EDIT_VERB "Editează"
     IDS_FIND_VERB "Caută"
     IDS_PRINT_VERB "Imprimă"
+    IDS_CMD_VERB "Command Prompt here"
 
     IDS_FILE_FOLDER "%u fișiere, %u dosare"
     IDS_PRINTERS "Imprimante"

@@ -770,6 +770,7 @@ BEGIN
     IDS_PASTE "Einfügen"
     IDS_EJECT "Auswerfen"
     IDS_DISCONNECT "Trennen"
+    IDS_OPENFILELOCATION "Open f&ile location"
 
     IDS_CREATEFOLDER_DENIED " Der Ordner kann nicht erstellt werden '%1'"
     IDS_CREATEFOLDER_CAPTION " Der Ordner kann nicht erstellt werden."
@@ -873,6 +874,7 @@ BEGIN
     IDS_CANTEJECTMEDIA "Auswerfen des Mediums nicht möglich (Fehlercode: %lu)."
     IDS_CANTSHOWPROPERTIES "Anzeigen der Eigenschaften nicht möglich (Fehlercode: %lu)."
     IDS_CANTDISCONNECT "Trennen nicht möglich (Fehlercode: %lu)."
+    IDS_NONE "(None)"
 
     /* Friendly File Type Names */
     IDS_DIRECTORY "Dateiordner"
@@ -909,6 +911,7 @@ BEGIN
     IDS_EDIT_VERB "Bearbeiten"
     IDS_FIND_VERB "Finden"
     IDS_PRINT_VERB "Drucken"
+    IDS_CMD_VERB "Command Prompt here"
 
     IDS_FILE_FOLDER "%u Dateien, %u Ordner"
     IDS_PRINTERS "Drucker"

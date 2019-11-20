@@ -778,6 +778,7 @@ BEGIN
     IDS_PASTE "插入"
     IDS_EJECT "退出"
     IDS_DISCONNECT "中斷"
+    IDS_OPENFILELOCATION "Open f&ile location"
 
     IDS_CREATEFOLDER_DENIED "無法建立資料夾 '%1'"
     IDS_CREATEFOLDER_CAPTION "無法建立資料夾"
@@ -826,7 +827,7 @@ BEGIN
     IDS_FAVORITES "我的最愛"
     IDS_STARTUP "「開始」功能表\\程式\\啟動"
     IDS_RECENT "Recent"
-    IDS_SENDTO "SendTo"
+    IDS_SENDTO "Se&nd To"
     IDS_STARTMENU "「開始」功能表"
     IDS_MYMUSIC "我的音樂"
     IDS_MYVIDEO "我的影片"
@@ -883,6 +884,7 @@ BEGIN
     IDS_CANTEJECTMEDIA "無法退出媒體 (錯誤碼: %lu)."
     IDS_CANTSHOWPROPERTIES "無法顯示內容 (錯誤碼: %lu)."
     IDS_CANTDISCONNECT "無法中斷 (錯誤碼: %lu)."
+    IDS_NONE "(None)"
 
     /* Friendly File Type Names */
     IDS_DIRECTORY "資料夾"
@@ -919,6 +921,7 @@ BEGIN
     IDS_EDIT_VERB "編輯"
     IDS_FIND_VERB "搜索"
     IDS_PRINT_VERB "列印"
+    IDS_CMD_VERB "Command Prompt here"
 
     IDS_FILE_FOLDER "%u 個檔案, %u 個檔案夾"
     IDS_PRINTERS "印表機"

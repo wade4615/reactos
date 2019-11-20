@@ -771,6 +771,7 @@ BEGIN
     IDS_PASTE "הכנס"
     IDS_EJECT "הוצא"
     IDS_DISCONNECT "נתק"
+    IDS_OPENFILELOCATION "Open f&ile location"
 
     IDS_CREATEFOLDER_DENIED "Unable to create the folder '%1'"
     IDS_CREATEFOLDER_CAPTION "Unable to create folder"
@@ -874,6 +875,7 @@ BEGIN
     IDS_CANTEJECTMEDIA "Unable to eject media (Error Code: %lu)."
     IDS_CANTSHOWPROPERTIES "Unable to show properties (Error Code: %lu)."
     IDS_CANTDISCONNECT "Unable to disconnect (Error Code: %lu)."
+    IDS_NONE "(None)"
 
     /* Friendly File Type Names */
     IDS_DIRECTORY "תיקיה"
@@ -910,6 +912,7 @@ BEGIN
     IDS_EDIT_VERB "ערוך"
     IDS_FIND_VERB "מצא"
     IDS_PRINT_VERB "הדפס"
+    IDS_CMD_VERB "Command Prompt here"
 
     IDS_FILE_FOLDER "%u קבצים, %u תיקיות"
     IDS_PRINTERS "מדפסות"

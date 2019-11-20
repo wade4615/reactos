@@ -777,6 +777,7 @@ BEGIN
     IDS_PASTE "贴上"
     IDS_EJECT "弹出"
     IDS_DISCONNECT "断开"
+    IDS_OPENFILELOCATION "Open f&ile location"
 
     IDS_CREATEFOLDER_DENIED "无法创建文件夹 '%1'"
     IDS_CREATEFOLDER_CAPTION "无法创建文件夹"
@@ -825,7 +826,7 @@ BEGIN
     IDS_FAVORITES "收藏夹"
     IDS_STARTUP "「开始」菜单\\程序\\启动"
     IDS_RECENT "Recent"
-    IDS_SENDTO "SendTo"
+    IDS_SENDTO "Se&nd To"
     IDS_STARTMENU "「开始」菜单"
     IDS_MYMUSIC "我的音乐"
     IDS_MYVIDEO "我的视频"
@@ -882,6 +883,7 @@ BEGIN
     IDS_CANTEJECTMEDIA "无法弹出媒体 (错误代码: %lu)."
     IDS_CANTSHOWPROPERTIES "无法显示属性 (错误代码: %lu)."
     IDS_CANTDISCONNECT "无法断开连接 (错误代码: %lu)."
+    IDS_NONE "(None)"
 
     /* Friendly File Type Names */
     IDS_DIRECTORY "文件夹"
@@ -918,6 +920,7 @@ BEGIN
     IDS_EDIT_VERB "编辑"
     IDS_FIND_VERB "查找"
     IDS_PRINT_VERB "打印"
+    IDS_CMD_VERB "Command Prompt here"
 
     IDS_FILE_FOLDER "%u 个文件，%u 个文件夹"
     IDS_PRINTERS "打印机"

@@ -769,6 +769,7 @@ BEGIN
     IDS_PASTE "Inserir"
     IDS_EJECT "Eject"
     IDS_DISCONNECT "Desligar"
+    IDS_OPENFILELOCATION "Open f&ile location"
 
     IDS_CREATEFOLDER_DENIED "Impossivel de criar pasta '%1'"
     IDS_CREATEFOLDER_CAPTION "Impossivel de criar pasta"
@@ -872,6 +873,7 @@ BEGIN
     IDS_CANTEJECTMEDIA "Unable to eject media (Error Code: %lu)."
     IDS_CANTSHOWPROPERTIES "Unable to show properties (Error Code: %lu)."
     IDS_CANTDISCONNECT "Unable to disconnect (Error Code: %lu)."
+    IDS_NONE "(None)"
 
     /* Friendly File Type Names */
     IDS_DIRECTORY "Pasta"
@@ -908,6 +910,7 @@ BEGIN
     IDS_EDIT_VERB "Editar"
     IDS_FIND_VERB "Procurar"
     IDS_PRINT_VERB "Imprimir"
+    IDS_CMD_VERB "Command Prompt here"
 
     IDS_FILE_FOLDER "%u Ficheiros, %u Pastas"
     IDS_PRINTERS "Impressoras"

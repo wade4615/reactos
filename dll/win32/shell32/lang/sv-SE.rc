@@ -769,6 +769,7 @@ BEGIN
     IDS_PASTE "Klistra in"
     IDS_EJECT "Eject"
     IDS_DISCONNECT "Disconnect"
+    IDS_OPENFILELOCATION "Open f&ile location"
 
     IDS_CREATEFOLDER_DENIED "Kunde inte skapa mappen '%1'"
     IDS_CREATEFOLDER_CAPTION "Kunde inte skapa mapp"
@@ -815,7 +816,7 @@ BEGIN
     IDS_FAVORITES "Favoriter"
     IDS_STARTUP "Start-meny\\Program\\Autostart"
     IDS_RECENT "Tidigare"
-    IDS_SENDTO "SendTo"
+    IDS_SENDTO "Se&nd To"
     IDS_STARTMENU "Start-meny"
     IDS_MYMUSIC "Min musik"
     IDS_MYVIDEO "Mina videoklipp"
@@ -872,6 +873,7 @@ BEGIN
     IDS_CANTEJECTMEDIA "Unable to eject media (Error Code: %lu)."
     IDS_CANTSHOWPROPERTIES "Unable to show properties (Error Code: %lu)."
     IDS_CANTDISCONNECT "Unable to disconnect (Error Code: %lu)."
+    IDS_NONE "(None)"
 
     /* Friendly File Type Names */
     IDS_DIRECTORY "Mapp"
@@ -908,6 +910,7 @@ BEGIN
     IDS_EDIT_VERB "Redigera"
     IDS_FIND_VERB "Hitta"
     IDS_PRINT_VERB "Skriv ut"
+    IDS_CMD_VERB "Command Prompt here"
 
     IDS_FILE_FOLDER "%u filer, %u mappar"
     IDS_PRINTERS "Skrivare"

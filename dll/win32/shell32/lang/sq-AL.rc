@@ -773,6 +773,7 @@ BEGIN
     IDS_PASTE "Fut"
     IDS_EJECT "Eject"
     IDS_DISCONNECT "Disconnect"
+    IDS_OPENFILELOCATION "Open f&ile location"
 
     IDS_CREATEFOLDER_DENIED "Unable to create the folder '%1'"
     IDS_CREATEFOLDER_CAPTION "Unable to create folder"
@@ -876,6 +877,7 @@ BEGIN
     IDS_CANTEJECTMEDIA "Unable to eject media (Error Code: %lu)."
     IDS_CANTSHOWPROPERTIES "Unable to show properties (Error Code: %lu)."
     IDS_CANTDISCONNECT "Unable to disconnect (Error Code: %lu)."
+    IDS_NONE "(None)"
 
     /* Friendly File Type Names */
     IDS_DIRECTORY "Dosje"
@@ -912,6 +914,7 @@ BEGIN
     IDS_EDIT_VERB "Modifiko"
     IDS_FIND_VERB "Gjej"
     IDS_PRINT_VERB "Printo"
+    IDS_CMD_VERB "Command Prompt here"
 
     IDS_FILE_FOLDER "%u Dokumenta, %u Dosje"
     IDS_PRINTERS "Printera"
