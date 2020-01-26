@@ -234,16 +234,16 @@ BEGIN
     EDITTEXT 14011, 58, 72, 170, 10, ES_LEFT | ES_READONLY | NOT WS_BORDER | NOT WS_TABSTOP | ES_AUTOHSCROLL
     LTEXT "物理サイズ:", 140101, 8, 88, 55, 10
     EDITTEXT 14012, 58, 88, 170, 10, ES_LEFT | ES_READONLY | NOT WS_BORDER | NOT WS_TABSTOP | ES_AUTOHSCROLL
-    LTEXT "収容サイズ:", 14026, 8, 104, 55, 10
+    LTEXT "内容:", 14026, 8, 104, 55, 10
     EDITTEXT 14027, 58, 104, 170, 10, ES_LEFT | ES_READONLY | NOT WS_BORDER | NOT WS_TABSTOP | ES_AUTOHSCROLL
     LTEXT "", -1, 8, 120, 221, 1, SS_ETCHEDHORZ | WS_CHILD | WS_VISIBLE
     LTEXT "作成日時:", 14014, 8, 128, 55, 10
     EDITTEXT 14015, 58, 128, 170, 10, ES_LEFT | ES_READONLY | NOT WS_BORDER | NOT WS_TABSTOP | ES_AUTOHSCROLL
     LTEXT "", -1, 8, 144, 221, 1, SS_ETCHEDHORZ | WS_CHILD | WS_VISIBLE
-    LTEXT "属性:", 14020, 8, 152, 46, 10
-    AUTOCHECKBOX "読み取り専用(&R)", 14021, 58, 151, 70, 10
-    AUTOCHECKBOX "隠しファイル(&H)", 14022, 126, 151, 70, 10
-    AUTOCHECKBOX "アーカイブ(&A)", 14023, 181, 151, 70, 10
+    LTEXT "属性:", 14020, 8, 152, 22, 10
+    AUTOCHECKBOX "読み取り専用(&R)", 14021, 30, 151, 67, 10
+    AUTOCHECKBOX "隠しファイル(&H)", 14022, 99, 151, 67, 10
+    AUTOCHECKBOX "アーカイブ(&A)", 14023, 170, 151, 55, 10
     PUSHBUTTON "詳細設定(&D)...", 14028, 158, 150, 70, 14, WS_CHILD | WS_VISIBLE | WS_TABSTOP
 END
 
@@ -276,10 +276,10 @@ BEGIN
     LTEXT "アクセス日時:", 14018, 8, 163, 45, 10
     EDITTEXT 14019, 58, 163, 170, 10, ES_LEFT | ES_READONLY | NOT WS_BORDER | NOT WS_TABSTOP
     LTEXT "", -1, 8, 179, 221, 1, SS_ETCHEDHORZ | WS_CHILD | WS_VISIBLE
-    LTEXT "属性:", 14020, 8, 189, 45, 10
-    AUTOCHECKBOX "読み取り専用(&R)", 14021, 58, 188, 67, 10
-    AUTOCHECKBOX "隠しファイル(&H)", 14022, 126, 188, 50, 10
-    AUTOCHECKBOX "アーカイブ(&A)", 14023, 181, 188, 49, 10
+    LTEXT "属性:", 14020, 8, 188, 30, 10
+    AUTOCHECKBOX "読み取り専用(&R)", 14021, 40, 188, 65, 10
+    AUTOCHECKBOX "隠しファイル(&H)", 14022, 107, 188, 62, 10
+    AUTOCHECKBOX "アーカイブ(&A)", 14023, 175, 188, 54, 10
     PUSHBUTTON "詳細設定(&D)...", 14028, 180, 185, 50, 15, WS_TABSTOP
 END
 
@@ -817,7 +817,7 @@ BEGIN
     IDS_RUNDLG_BROWSE_CAPTION "参照"
     IDS_RUNDLG_BROWSE_FILTER "実行可能ファイル (*.exe)\0*.exe\0すべてのファイル (*.*)\0*.*\0"
 
-    /* shell folder path default values */
+    /* Shell folder path default values. See also: dll/win32/userenv/lang */
     IDS_PROGRAMS "スタート メニュー\\プログラム"
     IDS_PERSONAL "マイ ドキュメント"
     IDS_FAVORITES "お気に入り"
@@ -830,9 +830,9 @@ BEGIN
     IDS_DESKTOPDIRECTORY "デスクトップ"
     IDS_NETHOOD "近くのネットワーク"
     IDS_TEMPLATES "テンプレート"
-    IDS_APPDATA "Application Data"
+    IDS_APPDATA "アプリのデータ"
     IDS_PRINTHOOD "近くのプリンタ"
-    IDS_LOCAL_APPDATA "Local Settings\\Application Data"
+    IDS_LOCAL_APPDATA "ローカル設定\\アプリのデータ"
     IDS_INTERNET_CACHE "インターネット一時ファイル"
     IDS_COOKIES "クッキー"
     IDS_HISTORY "履歴"
@@ -844,7 +844,7 @@ BEGIN
     IDS_COMMON_MUSIC "共有ドキュメント\\ミュージック"
     IDS_COMMON_PICTURES "共有ドキュメント\\ピクチャ"
     IDS_COMMON_VIDEO "共有ドキュメント\\ビデオ"
-    IDS_CDBURN_AREA "Local Settings\\Application Data\\Microsoft\\CD Burning"
+    IDS_CDBURN_AREA "ローカル設定\\アプリのデータ\\Microsoft\\CD Burning"
     IDS_NETWORKPLACE "マイ ネットワーク"
 
     IDS_NEWFOLDER "新しいフォルダ"
