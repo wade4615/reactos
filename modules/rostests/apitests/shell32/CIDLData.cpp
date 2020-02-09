@@ -60,16 +60,6 @@ static void TestAdviseAndCanonical(PCIDLIST_ABSOLUTE pidlFolder, UINT cidl, PCUI
 }
 
 
-static inline PCUIDLIST_ABSOLUTE HIDA_GetPIDLFolder(CIDA const* pida)
-{
-    return (PCUIDLIST_ABSOLUTE)(((LPBYTE)pida) + (pida)->aoffset[0]);
-}
-
-static inline PCUIDLIST_RELATIVE HIDA_GetPIDLItem(CIDA const* pida, SIZE_T i)
-{
-    return (PCUIDLIST_RELATIVE)(((LPBYTE)pida) + (pida)->aoffset[i + 1]);
-}
-
 #define ok_wstri(x, y) \
     ok(wcsicmp(x, y) == 0, "Wrong string. Expected '%S', got '%S'\n", y, x)
 
@@ -111,7 +101,7 @@ static void TestHDROP(PVOID pData, SIZE_T Size, LPCWSTR ExpectRoot, LPCWSTR Expe
 
     LPCWSTR Expected[2] = { ExpectPath1, ExpectPath2 };
 
-    DWORD offset = pDropFiles->pFiles;
+    SIZE_T offset = pDropFiles->pFiles;
     UINT Count = 0;
     for (;;Count++)
     {
