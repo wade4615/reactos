@@ -113,7 +113,6 @@ if(ARCH STREQUAL "i386")
         lib/fs/pxe.c
         arch/i386/halstub.c
         arch/i386/ntoskrnl.c
-        arch/i386/archmach.c
         arch/i386/drivemap.c
         arch/i386/hardware.c
         arch/i386/hwacpi.c
@@ -122,23 +121,34 @@ if(ARCH STREQUAL "i386")
         arch/i386/hwpci.c
         arch/i386/i386bug.c
         arch/i386/i386idt.c
-        arch/i386/i386rtl.c
         arch/i386/i386vid.c
-        arch/i386/machpc.c
-        arch/i386/pccons.c
-        arch/i386/pcdisk.c
-        arch/i386/pcmem.c
-        arch/i386/pcrtc.c
-        arch/i386/pcvideo.c
-        arch/i386/machxbox.c
-        arch/i386/xboxcons.c
-        arch/i386/xboxdisk.c
-        arch/i386/xboxfont.c
-        arch/i386/xboxi2c.c
-        arch/i386/xboxmem.c
-        arch/i386/xboxrtc.c
-        arch/i386/xboxvideo.c
         disk/scsiport.c)
+
+    if(SARCH STREQUAL "xbox")
+        list(APPEND FREELDR_ARC_SOURCE
+            # FIXME: Abstract things better so we don't need to include /pc/* here
+            arch/i386/pc/machpc.c       # machxbox.c depends on it
+            arch/i386/pc/pcbeep.c       # machxbox.c depends on it
+            arch/i386/pc/pcdisk.c       # hwdisk.c depends on it
+            arch/i386/pc/pcmem.c        # hwacpi.c/xboxmem.c depends on it
+            arch/i386/xbox/machxbox.c
+            arch/i386/xbox/xboxcons.c
+            arch/i386/xbox/xboxdisk.c
+            arch/i386/xbox/xboxfont.c
+            arch/i386/xbox/xboxi2c.c
+            arch/i386/xbox/xboxmem.c
+            arch/i386/xbox/xboxrtc.c
+            arch/i386/xbox/xboxvideo.c)
+    else()
+        list(APPEND FREELDR_ARC_SOURCE
+            arch/i386/pc/machpc.c
+            arch/i386/pc/pcbeep.c
+            arch/i386/pc/pccons.c
+            arch/i386/pc/pcdisk.c
+            arch/i386/pc/pcmem.c
+            arch/i386/pc/pcrtc.c
+            arch/i386/pc/pcvideo.c)
+    endif()
 
 elseif(ARCH STREQUAL "amd64")
     list(APPEND FREELDR_COMMON_ASM_SOURCE
@@ -160,14 +170,14 @@ elseif(ARCH STREQUAL "amd64")
         arch/i386/hwdisk.c
         arch/i386/hwpci.c
         arch/i386/i386bug.c
-        arch/i386/i386rtl.c
         arch/i386/i386vid.c
-        arch/i386/machpc.c
-        arch/i386/pccons.c
-        arch/i386/pcdisk.c
-        arch/i386/pcmem.c
-        arch/i386/pcrtc.c
-        arch/i386/pcvideo.c)
+        arch/i386/pc/machpc.c
+        arch/i386/pc/pcbeep.c
+        arch/i386/pc/pccons.c
+        arch/i386/pc/pcdisk.c
+        arch/i386/pc/pcmem.c
+        arch/i386/pc/pcrtc.c
+        arch/i386/pc/pcvideo.c)
 
 elseif(ARCH STREQUAL "arm")
     list(APPEND FREELDR_COMMON_ASM_SOURCE
@@ -196,9 +206,9 @@ if(USE_CLANG_CL)
     # We need to reduce the binary size
     add_target_compile_flags(freeldr_common "/Os")
 endif()
-if(NOT MSVC AND ARCH STREQUAL "i386")
+if(NOT MSVC AND ARCH STREQUAL "i386" AND SARCH STREQUAL "xbox")
   # Prevent a warning when doing a memcmp with address 0
-  set_source_files_properties(arch/i386/xboxmem.c PROPERTIES COMPILE_FLAGS "-Wno-nonnull")
+  set_source_files_properties(arch/i386/xbox/xboxmem.c PROPERTIES COMPILE_FLAGS "-Wno-nonnull")
 endif()
 
 set(PCH_SOURCE

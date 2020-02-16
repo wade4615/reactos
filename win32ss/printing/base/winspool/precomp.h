@@ -17,6 +17,7 @@
 #include <winspool_c.h>
 #include <winddiui.h>
 #include <ndk/rtlfuncs.h>
+#include <strsafe.h>
 
 #include <spoolss.h>
 #include <marshalling/marshalling.h>
@@ -39,5 +40,8 @@ SPOOLER_HANDLE, *PSPOOLER_HANDLE;
 
 // main.c
 extern HANDLE hProcessHeap;
+
+// utils.c
+extern BOOL UnicodeToAnsiInPlace(PWSTR pwszField);
 
 #endif

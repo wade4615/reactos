@@ -207,7 +207,7 @@ GetDeviceStatus(
 
     RtlInitUnicodeString(&PlugPlayData.DeviceInstance,
                          pDeviceID);
-    PlugPlayData.Operation = 0; /* Get status */
+    PlugPlayData.Operation = PNP_GET_DEVICE_STATUS;
 
     Status = NtPlugPlayControl(PlugPlayControlDeviceStatus,
                                (PVOID)&PlugPlayData,
@@ -221,6 +221,36 @@ GetDeviceStatus(
     {
         ret = NtStatusToCrError(Status);
     }
+
+    return ret;
+}
+
+
+static
+CONFIGRET
+SetDeviceStatus(
+    _In_ LPWSTR pDeviceID,
+    _In_ DWORD ulStatus,
+    _In_ DWORD ulProblem)
+{
+    PLUGPLAY_CONTROL_STATUS_DATA PlugPlayData;
+    CONFIGRET ret = CR_SUCCESS;
+    NTSTATUS Status;
+
+    DPRINT1("SetDeviceStatus(%S 0x%lx 0x%lx)\n",
+            pDeviceID, ulStatus, ulProblem);
+
+    RtlInitUnicodeString(&PlugPlayData.DeviceInstance,
+                         pDeviceID);
+    PlugPlayData.Operation = PNP_SET_DEVICE_STATUS;
+    PlugPlayData.DeviceStatus = ulStatus;
+    PlugPlayData.DeviceProblem = ulProblem;
+
+    Status = NtPlugPlayControl(PlugPlayControlDeviceStatus,
+                               (PVOID)&PlugPlayData,
+                               sizeof(PLUGPLAY_CONTROL_STATUS_DATA));
+    if (!NT_SUCCESS(Status))
+        ret = NtStatusToCrError(Status);
 
     return ret;
 }
@@ -337,7 +367,11 @@ PNP_GetVersion(
 {
     UNREFERENCED_PARAMETER(hBinding);
 
+    DPRINT("PNP_GetVersion(%p %p)\n",
+           hBinding, pVersion);
+
     *pVersion = 0x0400;
+
     return CR_SUCCESS;
 }
 
@@ -353,7 +387,11 @@ PNP_GetGlobalState(
     UNREFERENCED_PARAMETER(hBinding);
     UNREFERENCED_PARAMETER(ulFlags);
 
+    DPRINT("PNP_GetGlobalState(%p %p 0x%08lx)\n",
+           hBinding, pulState, ulFlags);
+
     *pulState = CM_GLOBAL_STATE_CAN_DO_UI | CM_GLOBAL_STATE_SERVICES_AVAILABLE;
+
     return CR_SUCCESS;
 }
 
@@ -366,7 +404,9 @@ PNP_InitDetection(
 {
     UNREFERENCED_PARAMETER(hBinding);
 
-    DPRINT("PNP_InitDetection() called\n");
+    DPRINT("PNP_InitDetection(%p)\n",
+           hBinding);
+
     return CR_SUCCESS;
 }
 
@@ -385,7 +425,8 @@ PNP_ReportLogOn(
     UNREFERENCED_PARAMETER(hBinding);
     UNREFERENCED_PARAMETER(Admin);
 
-    DPRINT("PNP_ReportLogOn(%u, %u) called\n", Admin, ProcessId);
+    DPRINT("PNP_ReportLogOn(%p %u, %u)\n",
+           hBinding, Admin, ProcessId);
 
     /* Get the users token */
     hProcess = OpenProcess(PROCESS_ALL_ACCESS, TRUE, ProcessId);
@@ -436,8 +477,8 @@ PNP_ValidateDeviceInstance(
     UNREFERENCED_PARAMETER(hBinding);
     UNREFERENCED_PARAMETER(ulFlags);
 
-    DPRINT("PNP_ValidateDeviceInstance(%S %lx) called\n",
-           pDeviceID, ulFlags);
+    DPRINT("PNP_ValidateDeviceInstance(%p %S 0x%08lx)\n",
+           hBinding, pDeviceID, ulFlags);
 
     if (!IsValidDeviceInstanceID(pDeviceID))
         return CR_INVALID_DEVINST;
@@ -477,13 +518,15 @@ PNP_GetRootDeviceInstance(
 
     UNREFERENCED_PARAMETER(hBinding);
 
-    DPRINT("PNP_GetRootDeviceInstance() called\n");
+    DPRINT("PNP_GetRootDeviceInstance(%p %S %lu)\n",
+           hBinding, pDeviceID, ulLength);
 
     if (!pDeviceID)
     {
         ret = CR_INVALID_POINTER;
         goto Done;
     }
+
     if (ulLength < lstrlenW(szRootDeviceInstanceID) + 1)
     {
         ret = CR_BUFFER_SMALL;
@@ -518,9 +561,9 @@ PNP_GetRelatedDeviceInstance(
     UNREFERENCED_PARAMETER(hBinding);
     UNREFERENCED_PARAMETER(ulFlags);
 
-    DPRINT("PNP_GetRelatedDeviceInstance() called\n");
-    DPRINT("  Relationship %ld\n", ulRelationship);
-    DPRINT("  DeviceId %S\n", pDeviceID);
+    DPRINT("PNP_GetRelatedDeviceInstance(%p %lu %S %p %p 0x%lx)\n",
+           hBinding, ulRelationship, pDeviceID, pRelatedDeviceId,
+           pulLength, ulFlags);
 
     if (!IsValidDeviceInstanceID(pDeviceID))
         return CR_INVALID_DEVINST;
@@ -570,7 +613,9 @@ PNP_EnumerateSubKeys(
     UNREFERENCED_PARAMETER(hBinding);
     UNREFERENCED_PARAMETER(ulFlags);
 
-    DPRINT("PNP_EnumerateSubKeys() called\n");
+    DPRINT("PNP_EnumerateSubKeys(%p %lu %lu %p %lu %p 0x%08lx)\n",
+           hBinding, ulBranch, ulIndex, Buffer, ulLength,
+           pulRequiredLen, ulFlags);
 
     switch (ulBranch)
     {
@@ -985,7 +1030,8 @@ PNP_GetDeviceList(
     WCHAR szInstance[MAX_DEVICE_ID_LEN];
     CONFIGRET ret = CR_SUCCESS;
 
-    DPRINT("PNP_GetDeviceList() called\n");
+    DPRINT("PNP_GetDeviceList(%p %S %p %p 0x%08lx)\n",
+           hBinding, pszFilter, Buffer, pulLength, ulFlags);
 
     if (ulFlags & ~CM_GETIDLIST_FILTER_BITS)
         return CR_INVALID_FLAG;
@@ -1354,7 +1400,7 @@ PNP_GetDeviceListSize(
     WCHAR szInstance[MAX_DEVICE_ID_LEN];
     CONFIGRET ret = CR_SUCCESS;
 
-    DPRINT("PNP_GetDeviceListSize(%p %S %p 0x%lx)\n",
+    DPRINT("PNP_GetDeviceListSize(%p %S %p 0x%08lx)\n",
            hBinding, pszFilter, pulLength, ulFlags);
 
     if (ulFlags & ~CM_GETIDLIST_FILTER_BITS)
@@ -1431,7 +1477,8 @@ PNP_GetDepth(
     UNREFERENCED_PARAMETER(hBinding);
     UNREFERENCED_PARAMETER(ulFlags);
 
-    DPRINT("PNP_GetDepth() called\n");
+    DPRINT("PNP_GetDepth(%p %S %p 0x%08lx)\n",
+           hBinding, pszDeviceID, pulDepth, ulFlags);
 
     if (!IsValidDeviceInstanceID(pszDeviceID))
         return CR_INVALID_DEVINST;
@@ -1479,7 +1526,9 @@ PNP_GetDeviceRegProp(
 
     UNREFERENCED_PARAMETER(hBinding);
 
-    DPRINT("PNP_GetDeviceRegProp() called\n");
+    DPRINT("PNP_GetDeviceRegProp(%p %S %lu %p %p %p %p 0x%08lx)\n",
+           hBinding, pDeviceID, ulProperty, pulRegDataType, Buffer,
+           pulTransferLen, pulLength, ulFlags);
 
     if (pulTransferLen == NULL || pulLength == NULL)
     {
@@ -1738,12 +1787,9 @@ PNP_SetDeviceRegProp(
     UNREFERENCED_PARAMETER(hBinding);
     UNREFERENCED_PARAMETER(ulFlags);
 
-    DPRINT("PNP_SetDeviceRegProp() called\n");
-
-    DPRINT("DeviceId: %S\n", pDeviceId);
-    DPRINT("Property: %lu\n", ulProperty);
-    DPRINT("DataType: %lu\n", ulDataType);
-    DPRINT("Length: %lu\n", ulLength);
+    DPRINT("PNP_SetDeviceRegProp(%p %S %lu %lu %p %lu 0x%08lx)\n",
+           hBinding, pDeviceId, ulProperty, ulDataType, Buffer,
+           ulLength, ulFlags);
 
     if (!IsValidDeviceInstanceID(pDeviceId))
         return CR_INVALID_DEVINST;
@@ -1989,24 +2035,58 @@ PNP_CreateKey(
     DWORD samDesired,
     DWORD ulFlags)
 {
-    HKEY hKey = 0;
+    HKEY hDeviceKey = NULL, hParametersKey = NULL;
+    DWORD dwError;
+    CONFIGRET ret = CR_SUCCESS;
 
-    if (RegCreateKeyExW(HKEY_LOCAL_MACHINE,
-                        pszSubKey,
-                        0,
-                        NULL,
-                        0,
-                        KEY_ALL_ACCESS,
-                        NULL,
-                        &hKey,
-                        NULL))
-        return CR_REGISTRY_ERROR;
+    UNREFERENCED_PARAMETER(hBinding);
+    UNREFERENCED_PARAMETER(samDesired);
 
-    /* FIXME: Set security key */
+    DPRINT("PNP_CreateKey(%p %S 0x%lx 0x%08lx)\n",
+           hBinding, pszSubKey, samDesired, ulFlags);
 
-    RegCloseKey(hKey);
+    if (ulFlags != 0)
+        return CR_INVALID_FLAG;
 
-    return CR_SUCCESS;
+    if (!IsValidDeviceInstanceID(pszSubKey))
+        return CR_INVALID_DEVINST;
+
+    dwError = RegOpenKeyExW(hEnumKey,
+                            pszSubKey,
+                            0,
+                            KEY_WRITE,
+                            &hDeviceKey);
+    if (dwError != ERROR_SUCCESS)
+    {
+        ret = CR_INVALID_DEVNODE;
+        goto done;
+    }
+
+    dwError = RegCreateKeyExW(hDeviceKey,
+                              L"Device Parameters",
+                              0,
+                              NULL,
+                              REG_OPTION_NON_VOLATILE,
+                              KEY_ALL_ACCESS,
+                              NULL,
+                              &hParametersKey,
+                              NULL);
+    if (dwError != ERROR_SUCCESS)
+    {
+        ret = CR_REGISTRY_ERROR;
+        goto done;
+    }
+
+    /* FIXME: Set key security */
+
+done:
+    if (hParametersKey != NULL)
+        RegCloseKey(hParametersKey);
+
+    if (hDeviceKey != NULL)
+        RegCloseKey(hDeviceKey);
+
+    return ret;
 }
 
 
@@ -2038,6 +2118,9 @@ PNP_GetClassCount(
 
     UNREFERENCED_PARAMETER(hBinding);
     UNREFERENCED_PARAMETER(ulFlags);
+
+    DPRINT("PNP_GetClassCount(%p %p 0x%08lx)\n",
+           hBinding, pulClassCount, ulFlags);
 
     dwError = RegOpenKeyExW(HKEY_LOCAL_MACHINE,
                             REGSTR_PATH_CLASS,
@@ -2085,7 +2168,8 @@ PNP_GetClassName(
     UNREFERENCED_PARAMETER(hBinding);
     UNREFERENCED_PARAMETER(ulFlags);
 
-    DPRINT("PNP_GetClassName() called\n");
+    DPRINT("PNP_GetClassName(%p %S %p %p 0x%08lx)\n",
+           hBinding, pszClassGuid, Buffer, pulLength, ulFlags);
 
     lstrcpyW(szKeyName, L"System\\CurrentControlSet\\Control\\Class\\");
     if (lstrlenW(pszClassGuid) + 1 < sizeof(szKeyName)/sizeof(WCHAR)-(lstrlenW(szKeyName) * sizeof(WCHAR)))
@@ -2136,7 +2220,8 @@ PNP_DeleteClassKey(
 
     UNREFERENCED_PARAMETER(hBinding);
 
-    DPRINT("PNP_GetClassName(%S, %lx) called\n", pszClassGuid, ulFlags);
+    DPRINT("PNP_GetClassName(%p %S 0x%08lx)\n",
+           hBinding, pszClassGuid, ulFlags);
 
     if (ulFlags & CM_DELETE_CLASS_SUBKEYS)
     {
@@ -3052,8 +3137,18 @@ PNP_RegisterDriver(
     LPWSTR pszDeviceID,
     DWORD ulFlags)
 {
-    UNIMPLEMENTED;
-    return CR_CALL_NOT_IMPLEMENTED;
+    DPRINT("PNP_RegisterDriver(%p %S 0x%lx)\n",
+           hBinding, pszDeviceID, ulFlags);
+
+    if (ulFlags & ~CM_REGISTER_DEVICE_DRIVER_BITS)
+        return CR_INVALID_FLAG;
+
+    if (!IsValidDeviceInstanceID(pszDeviceID))
+        return CR_INVALID_DEVINST;
+
+    SetDeviceStatus(pszDeviceID, 0, 0);
+
+    return CR_SUCCESS;
 }
 
 

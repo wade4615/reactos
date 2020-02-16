@@ -2,6 +2,7 @@
 #define _ISAPNP_PCH_
 
 #include <wdm.h>
+#include <ntstrsafe.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -32,8 +33,9 @@ typedef struct _ISAPNP_FDO_EXTENSION {
 
 typedef struct _ISAPNP_LOGICAL_DEVICE {
   ISAPNP_COMMON_EXTENSION Common;
-  USHORT VendorId;
+  UCHAR VendorId[3];
   USHORT ProdId;
+  ULONG SerialNumber;
   USHORT IoAddr;
   UCHAR IrqNo;
   UCHAR CSN;
