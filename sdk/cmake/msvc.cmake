@@ -95,6 +95,7 @@ add_compile_flags("/wd4018")
 # - TODO: C4090: different 'modifier' qualifiers (for C programs only;
 #          for C++ programs, the compiler error C2440 is issued)
 # - C4098: void function returning a value
+# - C4101: unreferenced local variable
 # - C4113: parameter lists differ
 # - C4129: unrecognized escape sequence
 # - C4133: incompatible types - from '<x> *' to '<y> *'
@@ -108,7 +109,7 @@ add_compile_flags("/wd4018")
 # - C4700: uninitialized variable usage
 # - C4715: 'function': not all control paths return a value
 # - C4716: function must return a value
-add_compile_flags("/we4013 /we4020 /we4022 /we4028 /we4047 /we4098 /we4113 /we4129 /we4133 /we4163 /we4229 /we4311 /we4312 /we4313 /we4477 /we4603 /we4700 /we4715 /we4716")
+add_compile_flags("/we4013 /we4020 /we4022 /we4028 /we4047 /we4098 /we4101 /we4113 /we4129 /we4133 /we4163 /we4229 /we4311 /we4312 /we4313 /we4477 /we4603 /we4700 /we4715 /we4716")
 
 # - C4189: local variable initialized but not referenced
 # Not in Release mode and not with MSVC 2010
@@ -485,6 +486,9 @@ function(CreateBootSectorTarget _target_name _asm_file _binary_file _base_addres
     set(_object_file ${_binary_file}.obj)
     set(_temp_file ${_binary_file}.tmp)
 
+    get_defines(_defines)
+    get_includes(_includes)
+
     if(USE_CLANG_CL)
         set(_no_std_includes_flag "-nostdinc")
     else()
@@ -493,7 +497,7 @@ function(CreateBootSectorTarget _target_name _asm_file _binary_file _base_addres
 
     add_custom_command(
         OUTPUT ${_temp_file}
-        COMMAND ${CMAKE_C_COMPILER} /nologo ${_no_std_includes_flag} /I${REACTOS_SOURCE_DIR}/sdk/include/asm /I${REACTOS_BINARY_DIR}/sdk/include/asm /I${REACTOS_SOURCE_DIR}/boot/freeldr /D__ASM__ /D_USE_ML /EP /c ${_asm_file} > ${_temp_file}
+        COMMAND ${CMAKE_C_COMPILER} /nologo ${_no_std_includes_flag} /I${REACTOS_SOURCE_DIR}/sdk/include/asm /I${REACTOS_BINARY_DIR}/sdk/include/asm ${_includes} ${_defines} /D__ASM__ /D_USE_ML /EP /c ${_asm_file} > ${_temp_file}
         DEPENDS ${_asm_file})
 
     if(ARCH STREQUAL "arm")

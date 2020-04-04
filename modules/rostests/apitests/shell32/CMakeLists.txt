@@ -22,6 +22,7 @@ list(APPEND SOURCE
     IShellFolderViewCB.cpp
     OpenAs_RunDLL.cpp
     PathResolve.cpp
+    SHChangeNotify.cpp
     SHCreateDataObject.cpp
     SHCreateFileExtractIconW.cpp
     SHParseDisplayName.cpp
@@ -45,3 +46,9 @@ set_module_type(shell32_apitest win32cui)
 add_importlibs(shell32_apitest user32 gdi32 shell32 ole32 oleaut32 advapi32 shlwapi msvcrt kernel32 ntdll)
 add_pch(shell32_apitest shelltest.h SOURCE)
 add_rostests_file(TARGET shell32_apitest)
+
+# shell-notify.exe
+add_executable(shell-notify shell-notify.cpp)
+set_module_type(shell-notify win32gui UNICODE)
+add_importlibs(shell-notify msvcrt kernel32 user32 shell32 shlwapi ole32)
+add_rostests_file(TARGET shell-notify SUBDIR testdata)
